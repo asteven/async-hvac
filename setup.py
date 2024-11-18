@@ -1,21 +1,20 @@
 #!/usr/bin/env python
 import os
+import pathlib
 import sys
 from setuptools import setup, find_packages
-from pkg_resources import resource_filename
 
-# depending on your execution context the version file
-# may be located in a different place!
-vsn_path = resource_filename(__name__, 'async_hvac/version')
-if not os.path.exists(vsn_path):
-    vsn_path = resource_filename(__name__, 'version')
-    if not os.path.exists(vsn_path):
-        print("%s is missing" % vsn_path)
-        sys.exit(1)
+version = '9.9.9'
+for candidate in ('async_hvac/version', 'version'):
+    path = pathlib.Path(candidate)
+    with path.open('r') as f:
+        version = f.read()
+        break
 
 setup(
     name='async-hvac',
-    version=open(vsn_path, 'r').read(),
+    #version=open(vsn_path, 'r').read(),
+    version=version,
     description='HashiCorp Vault API client',
     long_description='HashiCorp Vault API python 3.6+ client using asyncio.',
     author='Lionel Zerbib',
