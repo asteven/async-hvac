@@ -7,9 +7,10 @@ from setuptools import setup, find_packages
 version = '9.9.9'
 for candidate in ('async_hvac/version', 'version'):
     path = pathlib.Path(candidate)
-    with path.open('r') as f:
-        version = f.read()
-        break
+    if path.exists():
+        with path.open('r') as f:
+            version = f.read()
+            break
 
 setup(
     name='async-hvac',
